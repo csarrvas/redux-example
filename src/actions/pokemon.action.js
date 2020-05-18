@@ -5,6 +5,13 @@ export const types = {
   FETCH_POKEMON_FAILURE: 'POKEMON/FETCH_FAILURE',
   FETCH_POKEMON_REQUEST: 'POKEMON/FETCH_REQUEST',
   FETCH_POKEMON_SUCCESS: 'POKEMON/FETCH_SUCCESS',
+
+  FETCH_POKEMON_LIST_BY_TYPE_FAILURE: 'POKEMON/FETCH_LIST_BY_TYPE_FAILURE',
+  FETCH_POKEMON_LIST_BY_TYPE_REQUEST: 'POKEMON/FETCH_LIST_BY_TYPE_REQUEST',
+  FETCH_POKEMON_LIST_BY_TYPE_SUCCESS: 'POKEMON/FETCH_LIST_BY_TYPE_SUCCESS',
+  FETCH_POKEMON_TYPES_FAILURE: 'POKEMON/FETCH_TYPES_FAILURE',
+  FETCH_POKEMON_TYPES_REQUEST: 'POKEMON/FETCH_TYPES_REQUEST',
+  FETCH_POKEMON_TYPES_SUCCESS: 'POKEMON/FETCH_TYPES_SUCCESS',
 };
 
 export function fetchRequest() {
@@ -46,3 +53,41 @@ export function fetchDetailError() {
 }
 
 
+export function fetchTypesRequest() {
+  return {
+    type: types.FETCH_POKEMON_TYPES_REQUEST,
+  }
+}
+
+export function fetchTypesSuccess(listOfTypes) {
+  return {
+    type: types.FETCH_POKEMON_TYPES_SUCCESS,
+    payload: { listOfTypes }
+  }
+}
+
+export function fetchTypesError() {
+  return {
+    type: types.FETCH_POKEMON_TYPES_FAILURE,
+  }
+}
+
+export function fetchByTypeRequest(listOfTypes) {
+  return {
+    type: types.FETCH_POKEMON_LIST_BY_TYPE_REQUEST,
+    payload: { listOfTypes }
+  }
+}
+
+export function fetchByTypeSuccess(listByTypes) {
+  return {
+    type: types.FETCH_POKEMON_LIST_BY_TYPE_SUCCESS,
+    payload: { listByTypes }
+  }
+}
+
+export function fetchByTypeError() {
+  return {
+    type: types.FETCH_POKEMON_LIST_BY_TYPE_FAILURE,
+  }
+}

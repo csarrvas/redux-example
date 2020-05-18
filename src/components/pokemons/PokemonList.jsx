@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 
 import PokemonItem from './PokemonItem';
+import { Link } from 'react-router-dom';
 
-const PokemonList = ({pokeCards, error, loading}) => {
+const PokemonList = ({pokeCards, error, loading, listOfTypes, renderAgain}) => {
+
+  const [typesSelected, setTypes] = useState([]);
+
   if (error) {
     return (
       <div className="alert alert-danger">
@@ -19,16 +23,45 @@ const PokemonList = ({pokeCards, error, loading}) => {
     );
   }
 
-  return ( 
-    <div className="row"> 
-      {pokeCards.map(card => {
-        return (
-          <PokemonItem  
-            card={card} 
-            key={card.id} />
-        )
-      })}
-    </div>
+  const updateTypes = (e) => {
+    if (e.target.checked) {
+      setTypes([...typesSelected, e.target.value]);
+    } else {
+      setTypes(typesSelected.filter(type => type !== e.target.value));
+    }
+  }
+
+  const makeASearch = () => {
+    renderAgain(typesSelected);
+    setTypes([]);
+  }
+
+  return (
+    <Fragment>
+      <div className="row" style={{display: 'grid', gridTemplate: 'repeat(4, 1fr) / repeat(3, 1fr)' }}>
+        {listOfTypes.map(type =>
+          <div key={type}>
+            <input type="checkbox" id={type} value={type} onClick={updateTypes} />
+            <label htmlFor={type}>{type}</label>
+          </div>
+        )}
+      </div>
+      {listOfTypes.length > 0
+        ? <div className="row" style={{ display:'flex', justifyContent: 'center' }}>
+            <Link to={`/pokemons?types=${typesSelected.join('|')}`}><button onClick={makeASearch}>Filter by types</button></Link>
+          </div>
+        : null
+      }
+      <div className="row"> 
+        {pokeCards.map(card => {
+          return (
+            <PokemonItem  
+              card={card} 
+              key={card.id} />
+          )
+        })}
+      </div>
+    </Fragment>
   );
 }
 
